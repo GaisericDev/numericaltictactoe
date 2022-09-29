@@ -10,12 +10,17 @@ pragma solidity 0.8.17;
     - Add ownable + permissions
     - Refactor to uint256 wherever possible (used uint8 for the tighter struct)
     - Prevent players from using a number more than once
+    - Prevent players from joining (overwriting) games with 2 players
+    - Check who won the game
+    - Add draw clause
+    - Prevent game from continuing after game has ended
     - Customizeable odd / even for p1 / p2
     - Add diagonal win con
     - Add tokens as reward upon win
     - Make vs ai mode
     - Make fog of war mode using zk proof
     - Test when a contract deployment for a new game would be more desireable than creating a struct  
+    - ...
 */
 contract GameFactory {
     // Game struct that will contain the state of a given game.
