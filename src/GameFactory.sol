@@ -61,6 +61,11 @@ contract GameFactory {
         require(game.turn ? msg.sender == game.p2 : msg.sender == game.p1, "It is not your turn!");
         _;
     }
+    // Ensure the game has started
+    modifier gameStarted(uint id){
+        require(games[id].gameStarted == true, "Game not started!");
+        _;
+    }
     // New game event
     event NewGame(Game _newGame);
     // Player has joined event
@@ -101,6 +106,7 @@ contract GameFactory {
 
     // Make a move 
     function makeMove(uint256 _id, uint8 _x, uint8 _y, uint8 _value) public payable isPlayer(_id) isLegalMove(_id, _x, _y, _value) {
+        require(games[_id].gameStarted = true, "This is not a valid game!");
         // Make the move
         games[_id].board[_y][_x] = _value;
         // Check if winner
