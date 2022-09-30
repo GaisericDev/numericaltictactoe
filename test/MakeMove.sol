@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 import "../src/GameFactory.sol";
 
-contract CreateGame is Test, GameFactory {
+contract MakeMove is Test, GameFactory {
     GameFactory public gameFactory;
     address p1 = address(0x35524A1a02D6C89C8FceAd21644cB61b032BD3DE);
     address p2 = address(0x35524a1A02d6C89C8FCEAD21644CB61B032Bd3Df);
