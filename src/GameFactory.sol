@@ -36,8 +36,10 @@ contract GameFactory {
         address p2;
     }
     // List of created games
-    Game[] public games;
+    // Game[] public games;
     // Mapping of game id's to games
+    uint gameCount = 0;
+    mapping (uint => Game) public games;
     // Ensure player is not the a contract
     modifier isEOA {
         require(tx.origin == msg.sender, "Not a valid player");
@@ -80,9 +82,10 @@ contract GameFactory {
             }
         }
         newGame.board = temp;
-        games.push(newGame);
-        // Emit new game event with the game address
-        emit NewGame(games[games.length -1]);
+        gameCount++;
+        games[gameCount -1] = newGame;
+        // Emit new game event
+        emit NewGame(games[gameCount - 1]);
     }
 
     // Join game for p2
@@ -173,6 +176,11 @@ contract GameFactory {
             }
         }
         return false;
+    }
+
+    // Getter for a game
+    function getGame(uint id)public view returns (Game memory){
+        return games[id];
     }
 
     // Fallback in case ETH ends up here
