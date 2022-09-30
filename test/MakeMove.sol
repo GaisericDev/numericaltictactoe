@@ -58,7 +58,7 @@ contract MakeMove is Test, GameFactory {
         gameFactory.makeMove(0, 0, 0, 9);
         // P1 makes a move (is p2 turn)
         vm.prank(p2, p2);
-        vm.expectRevert(abi.encodePacked("It is not your turn!");
+        vm.expectRevert(abi.encodePacked("It is not your turn!"));
         gameFactory.makeMove(0, 1, 0, 6);
     }
     // Contract should not be able to make move
