@@ -46,4 +46,10 @@ contract JoinGame is Test {
         vm.prank(p2, p2);
         gameFactory.join(0);
     }
+
+    // Contract joins a game
+    function testFailJoinContract() public {
+        vm.expectRevert(abi.encodePacked("Not a valid player"));
+        gameFactory.join(0);
+    }
 }
