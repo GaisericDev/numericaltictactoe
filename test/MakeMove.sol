@@ -15,35 +15,16 @@ contract CreateGame is Test {
         // Create a game of board size 3
         vm.prank(p1, p1); // should only be valid for creating the game and not subsequent calls
         gameFactory.createPvP(3); // game created by p1
-    }
-
-    // P1 joins own game
-    function testFailJoinOwnGame()public{
-        vm.prank(p1, p1);
-        gameFactory.join(0);
-    }
-
-    // P2 joins P1 game
-    function testP1JoinP2Game()public{
+        // P2 joins P1 game
         vm.prank(p2, p2);
         gameFactory.join(0);
     }
 
-    // P1 tries to join random (unexisting) games with id > 0
-    function testFailJoinRandom(uint id)public{
-        vm.prank(p1, p1);
-        gameFactory.join(id);
-    }
-
-    // P3 joins a game with P1, P2
-    function testFailJoinP3() public{
-        vm.prank(p3, p3);
-        gameFactory.join(0);
-    }
-
-    // P2 joins a game with P1, P2
-    function testFailJoinP2() public{
-        vm.prank(p2, p2);
-        gameFactory.join(0);
-    }
+    // Assert P1 Turn
+    function testP1Turn() public {
+        // turn == false => p1 turn
+        // turn == true => p2 turn
+        bool turn = gameFactory.games[0].turn;
+        assertEq(turn, false);
+     }
 }

@@ -38,7 +38,6 @@ contract GameFactory {
     // List of created games
     Game[] public games;
     // Mapping of game id's to games
-
     // Ensure player is not the a contract
     modifier isEOA {
         require(tx.origin == msg.sender, "Not a valid player");
@@ -68,8 +67,7 @@ contract GameFactory {
 
     // Create PvP game
     // @dev Creates a temp array + struct in memory that is then put into storage, might be a more efficient way to do this
-    // @dev add isEOA modifier after figuring out how to pass in foundry
-    function createPvP(uint8 _boardSize) public payable {
+    function createPvP(uint8 _boardSize) public payable isEOA{
         require(_boardSize > 2, "Invalid board size"); // Boards of 0x0 and 1x1 and 2x2 are useless
         Game memory newGame;
         newGame.p1 = msg.sender;
@@ -88,8 +86,7 @@ contract GameFactory {
     }
 
     // Join game for p2
-    // @dev add isEOA modifier after figuring out how to pass in foundry
-    function join(uint256 _id) public payable{
+    function join(uint256 _id) public payable isEOA{
         require(msg.sender != games[_id].p1, "Can't join your own game!");
         // Set p2 
         games[_id].p2 = msg.sender;
@@ -116,9 +113,9 @@ contract GameFactory {
         uint8 n = games[_id].dimensions;
         // Window slider of size k on row r
         for(uint8 r = 0; r < n; r++){
-            for(uint k = 2; k <= n; k++){
-                bool wonHorizontal = windowSlide(games[_id].board, n, k, r);
-                bool wonVertical = windowSlide(rotate(games[_id].board, n), n, k, r);
+            for(uint k = 2; k <= n; k++){ // O(n^2)
+                bool wonHorizontal = windowSlide(games[_id].board, n, k, r); // O(n)
+                bool wonVertical = windowSlide(rotate(games[_id].board, n), n, k, r); // O(n^2) => O((n + n^2)^2)
                 if(wonHorizontal || wonVertical){
                     return true;
                 }
