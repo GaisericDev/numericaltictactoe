@@ -48,7 +48,7 @@ contract JoinGame is Test {
     }
 
     // Contract joins a game
-    function testFailJoinContract() public {
+    function testJoinContract() public {
         vm.expectRevert(abi.encodePacked("Not a valid player"));
         gameFactory.join(0);
     }

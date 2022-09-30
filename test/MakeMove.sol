@@ -31,7 +31,7 @@ contract MakeMove is Test, GameFactory {
         gameFactory.makeMove(0, 0, 0, 9);
     }
     // P2 should not be able to make a move during p1 turn
-    function testFailP2MoveP1Turn()public{
+    function testP2MoveP1Turn()public{
         vm.prank(p2, p2);
         vm.expectRevert(abi.encodePacked("It is not your turn!"));
         gameFactory.makeMove(0, 0, 0, 6);
