@@ -71,5 +71,4 @@ contract MakeMove is Test, GameFactory {
         vm.expectRevert(abi.encodePacked("Only players can do this!"));
         gameFactory.makeMove(0, 0, 0, 9);
     }
-    // Reentrancy turns
 }

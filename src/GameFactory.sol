@@ -10,7 +10,6 @@ pragma solidity 0.8.17;
     - Add ownable + permissions
     - Refactor to uint256 wherever possible (used uint8 for the tighter struct)
     - Prevent players from using a number more than once
-    - Prevent players from joining (overwriting) games with 2 players
     - Check who won the game
     - Add draw clause
     - Prevent game from continuing after game has ended
@@ -63,7 +62,6 @@ contract GameFactory {
         _;
     }
     // New game event
-    // event NewGame(address _gameAddress);
     event NewGame(Game _newGame);
     // Player has joined event
     event Joined(address _player);
