@@ -48,4 +48,11 @@ contract MoveInput is Test, GameFactory {
         vm.prank(p1, p1);
         gameFactory.makeMove(0, 0, 0, num);
     }
+
+    // P2 makes a move  with all allowed odd numbers
+    // P2 makes a move with all allowed even numbers
+    // P1 makes a move with different x and y coords
+    // P2 repeats P1 move (move at same coords)
+    // P1 makes move with an already used number
+    // P2 makes a move with an already used number
 }
