@@ -30,19 +30,25 @@ contract JoinGame is Test {
     }
 
     // P1 tries to join random (unexisting) games with id > 0
-    function testFailJoinRandom(uint id)public{
+    function testJoinRandom(uint id)public{
+        vm.assume(id > 0);
+        vm.expectRevert(abi.encodePacked("This is not a valid game!"));
         vm.prank(p1, p1);
         gameFactory.join(id);
     }
 
     // P3 joins a game with P1, P2
     function testFailJoinP3() public{
+        vm.expectRevert(abi.encodePacked("Game full!"));
         vm.prank(p3, p3);
         gameFactory.join(0);
     }
 
     // P2 joins a game with P1, P2
-    function testFailJoinP2() public{
+    function testJoinP2() public{
+        vm.prank(p2, p2);
+        gameFactory.join(0);
+        vm.expectRevert(abi.encodePacked("Game full!"));
         vm.prank(p2, p2);
         gameFactory.join(0);
     }

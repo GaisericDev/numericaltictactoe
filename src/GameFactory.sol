@@ -28,6 +28,7 @@ contract GameFactory {
         uint8[][] board;
         uint8 dimensions;
         bool turn; //for now, let's assume p1 always starts (turn = false) and is always odd
+        bool gameStarted;
         bool gameEnded;
         bool p1Won;
         bool p2Won;
@@ -71,7 +72,9 @@ contract GameFactory {
     // @dev Creates a temp array + struct in memory that is then put into storage, might be a more efficient way to do this
     function createPvP(uint8 _boardSize) public payable isEOA{
         require(_boardSize > 2, "Invalid board size"); // Boards of 0x0 and 1x1 and 2x2 are useless
+        gameCount++;
         Game memory newGame;
+        newGame.gameStarted = true;
         newGame.p1 = msg.sender;
         newGame.dimensions = _boardSize;
         uint8[][] memory temp = new uint8[][](_boardSize);
@@ -82,7 +85,6 @@ contract GameFactory {
             }
         }
         newGame.board = temp;
-        gameCount++;
         games[gameCount -1] = newGame;
         // Emit new game event
         emit NewGame(games[gameCount - 1]);
@@ -90,7 +92,9 @@ contract GameFactory {
 
     // Join game for p2
     function join(uint256 _id) public payable isEOA{
+        require(games[_id].gameStarted == true, "This is not a valid game!");
         require(msg.sender != games[_id].p1, "Can't join your own game!");
+        require(games[_id].p2 == address(0), "Game full!");
         // Set p2 
         games[_id].p2 = msg.sender;
         // Emit event p2 has joined
