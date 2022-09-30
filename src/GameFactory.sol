@@ -102,7 +102,7 @@ contract GameFactory {
     }
 
     // Make a move 
-    function makeMove(uint256 _id, uint8 _x, uint8 _y, uint8 _value) public payable isLegalMove(_id, _x, _y, _value){
+    function makeMove(uint256 _id, uint8 _x, uint8 _y, uint8 _value) public payable isPlayer(_id) isLegalMove(_id, _x, _y, _value) {
         // Make the move
         games[_id].board[_y][_x] = _value;
         // Check if winner

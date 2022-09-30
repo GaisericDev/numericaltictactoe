@@ -32,9 +32,9 @@ contract MakeMove is Test, GameFactory {
     }
     // P2 should not be able to make a move during p1 turn
     function testP2MoveP1Turn()public{
-        vm.prank(p2, p2);
         vm.expectRevert(abi.encodePacked("It is not your turn!"));
-        gameFactory.makeMove(0, 0, 0, 6);
+        vm.prank(p2, p2);
+        gameFactory.makeMove(0, 0, 0, 9);
     }
     // Turns update after a turn is made
     function testTurnUpdate()public{
@@ -57,10 +57,19 @@ contract MakeMove is Test, GameFactory {
         vm.prank(p1,p1);
         gameFactory.makeMove(0, 0, 0, 9);
         // P1 makes a move (is p2 turn)
-        vm.prank(p2, p2);
         vm.expectRevert(abi.encodePacked("It is not your turn!"));
+        vm.prank(p1, p1);
         gameFactory.makeMove(0, 1, 0, 6);
     }
     // Contract should not be able to make move
+    function testMoveContract()public{
+        vm.expectRevert(abi.encodePacked("Only players can do this!"));
+        gameFactory.makeMove(0, 0, 0, 9);
+    }
+    // P3 should not be able to make a move
+    function testMoveP3()public{
+        vm.expectRevert(abi.encodePacked("Only players can do this!"));
+        gameFactory.makeMove(0, 0, 0, 9);
+    }
     // Reentrancy turns
 }
